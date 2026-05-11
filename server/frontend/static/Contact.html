@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/bootstrap.min.css" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      .contact-card {
+        width: 80%;
+        margin: auto;
+        margin-top: 4%;
+        margin-bottom: 5%;
+        padding: 35px;
+      }
+
+      .contact-title {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .contact-intro {
+        max-width: 950px;
+        margin: 0 auto 35px auto;
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .contact-image {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: space-around;
+        gap: 25px;
+        margin-bottom: 35px;
+      }
+
+      .contact-box {
+        width: 30%;
+        padding: 25px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .contact-box h4 {
+        margin-bottom: 15px;
+        color: #5e3c82;
+        font-weight: bold;
+      }
+
+      .contact-form {
+        width: 70%;
+        margin: auto;
+        padding: 25px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .contact-form h3 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .form-button {
+        background-color: #5e3c82;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light"
+      style="background-color: darkturquoise; height: 1in"
+    >
+      <div class="container-fluid">
+        <h2 style="padding-right: 5%">Dealerships</h2>
+
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" style="font-size: larger" href="/">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" style="font-size: larger" href="/about">
+                About Us
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                style="font-size: larger"
+                href="/contact"
+              >
+                Contact Us
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <img
+      class="contact-image"
+      src="/static/contactbn.png"
+      alt="Best Cars customer service"
+    />
+
+    <div class="card contact-card">
+      <h1 class="contact-title">Contact Us</h1>
+
+      <p class="contact-intro">
+        We are here to help you find the perfect vehicle. Contact our team for
+        information about our dealerships, available cars, customer reviews, or
+        support services.
+      </p>
+
+      <div class="contact-info">
+        <div class="contact-box">
+          <h4>Address</h4>
+          <p>
+            Best Cars Dealership<br />
+            1250 Auto Park Avenue<br />
+            New York, NY 10001
+          </p>
+        </div>
+
+        <div class="contact-box">
+          <h4>Email</h4>
+          <p>support@bestcars.com</p>
+          <p>sales@bestcars.com</p>
+        </div>
+
+        <div class="contact-box">
+          <h4>Phone</h4>
+          <p>+1 (555) 123-4567</p>
+          <p>Monday - Friday<br />9:00 AM - 6:00 PM</p>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>Request a Callback</h3>
+
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter your name"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea
+              class="form-control"
+              rows="4"
+              placeholder="Write your message here"
+            ></textarea>
+          </div>
+
+          <div style="text-align: center">
+            <button type="submit" class="form-button">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
