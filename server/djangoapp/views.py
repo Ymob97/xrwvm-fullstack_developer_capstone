@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .populate import initiate
 from .models import CarMake, CarModel
+from .restapis import get_request, analyze_review_sentiments, post_review
 
 
 logger = logging.getLogger(__name__)
@@ -89,19 +90,83 @@ def get_cars(request):
 
     return JsonResponse({"CarModels": cars})
 
-# # Update the `get_dealerships` view to render the index page with
-# a list of dealerships
-# def get_dealerships(request):
-# ...
+# Update the `get_dealerships` view to render all dealerships
+# or dealerships filtered by state
+def get_dealerships(request, state="All"):
 
-# Create a `get_dealer_reviews` view to render the reviews of a dealer
-# def get_dealer_reviews(request,dealer_id):
-# ...
+    if state == "All":
+        endpoint = "/fetchDealers"
+    else:
+        endpoint = "/fetchDealers/" + state
 
-# Create a `get_dealer_details` view to render the dealer details
-# def get_dealer_details(request, dealer_id):
-# ...
+    dealerships = get_request(endpoint)
 
-# Create a `add_review` view to submit a review
-# def add_review(request):
-# ...
+    return JsonResponse({
+        "status": 200,
+        "dealers": dealerships
+    })
+
+
+# Create a `get_dealer_reviews` view to render dealer reviews
+# and analyze review sentiments
+def get_dealer_reviews(request, dealer_id):
+
+    endpoint = "/fetchReviews/dealer/" + str(dealer_id)
+
+    reviews = get_request(endpoint)
+
+    for review in reviews:
+
+        text = review.get("review", "")
+
+        sentiment_response = analyze_review_sentiments(text)
+
+        review["sentiment"] = sentiment_response.get("sentiment")
+
+    return JsonResponse({
+        "status": 200,
+        "reviews": reviews
+    })
+
+
+# Create a `get_dealer_details` view to render dealer details
+def get_dealer_details(request, dealer_id):
+
+    endpoint = "/fetchDealer/" + str(dealer_id)
+
+    dealer = get_request(endpoint)
+
+    return JsonResponse({
+        "status": 200,
+        "dealer": dealer
+    })
+
+
+# Create an `add_review` view to submit a dealer review
+def add_review(request):
+
+    if request.user.is_anonymous is False:
+
+        data = json.loads(request.body)
+
+        try:
+
+            response = post_review(data)
+
+            print(response)
+
+            return JsonResponse({
+                "status": 200
+            })
+
+        except:
+
+            return JsonResponse({
+                "status": 401,
+                "message": "Error in posting review"
+            })
+
+    return JsonResponse({
+        "status": 403,
+        "message": "Unauthorized"
+    })
