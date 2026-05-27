@@ -30,12 +30,15 @@ ALLOWED_HOSTS = [
     "localhost",
     "eduls-8000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai",
     "127.0.0.1",
+    "eduls-8000.theadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai",
+    
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://eduls-8000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai"
-]
-
+    "https://eduls-8000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai",
+    "https://eduls-8000.theadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai",
+    "https://*.proxy.cognitiveclass.ai",
+    ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [],
