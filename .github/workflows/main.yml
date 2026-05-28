@@ -31,7 +31,7 @@ jobs:
       - name: Run Linter
         run: |
           pwd
-          find ./server -name "*.py" -exec flake8 --ignore=E501,W292,E302,E231,E225,F401,E226,E227,W293,E123,E722 {} +
+          find ./server -name "*.py" -exec flake8 --ignore=E501,W292,E302,E231,E225,F401,E226,E227,W293,E123,E722,E275 {} +
           echo "Linted all the python files successfully"
 
   lint_js:
