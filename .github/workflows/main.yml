@@ -52,5 +52,5 @@ jobs:
 
       - name: Run Linter
         run: |
-          find ./server/database -name "*.js" -exec jshint {} +
+          find ./server/database -path "*/node_modules/*" -prune -o -name "*.js" -exec jshint {} +
           echo "Linted all the js files successfully"
