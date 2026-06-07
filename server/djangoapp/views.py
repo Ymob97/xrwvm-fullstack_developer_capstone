@@ -121,7 +121,10 @@ def get_dealer_reviews(request, dealer_id):
 
         sentiment_response = analyze_review_sentiments(text)
 
-        review["sentiment"] = sentiment_response.get("sentiment")
+        if sentiment_response:
+            review["sentiment"] = sentiment_response.get("sentiment")
+        else:
+            review["sentiment"] = "neutral"
 
     return JsonResponse({
         "status": 200,
