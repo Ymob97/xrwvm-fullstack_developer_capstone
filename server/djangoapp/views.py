@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .populate import initiate
 from .models import CarMake, CarModel
-from .restapis import get_request, analyze_review_sentiments, post_review
+from .restapis import get_request, analyze_review_sentiments, post_review, searchcars_request
 
 
 logger = logging.getLogger(__name__)
@@ -173,3 +173,10 @@ def add_review(request):
         "status": 403,
         "message": "Unauthorized"
     })
+def get_inventory(request, id):
+    if id:
+        endpoint = "/cars/{}".format(id)
+        cars = searchcars_request(endpoint)
+        return JsonResponse({"cars": cars}, safe=False, status=200)
+    else:
+        return JsonResponse({"message": "Bad Request"}, status=400)
