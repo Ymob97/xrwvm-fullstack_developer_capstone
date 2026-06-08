@@ -175,7 +175,7 @@ def add_review(request):
     })
 def get_inventory(request, id):
     if id:
-        endpoint = "/cars/{}".format(id)
+        endpoint = "cars/{}".format(id)
         cars = searchcars_request(endpoint)
         return JsonResponse({"cars": cars}, safe=False, status=200)
     else:
