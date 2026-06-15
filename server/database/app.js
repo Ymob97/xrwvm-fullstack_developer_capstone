@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const mongoose = require("mongoose");
 const fs = require("fs");
@@ -16,10 +18,15 @@ const dealerships_data = JSON.parse(
   fs.readFileSync("data/dealerships.json", "utf8")
 );
 
+const cars_data = JSON.parse(
+  fs.readFileSync("data/car_records.json", "utf8")
+);
+
 mongoose.connect("mongodb://mongo_db:27017/", { dbName: "dealershipsDB" });
 const Reviews = require("./review");
 
 const Dealerships = require("./dealership");
+const Cars = require("./inventory");
 
 try {
   Reviews.deleteMany({}).then(() => {
@@ -27,6 +34,9 @@ try {
   });
   Dealerships.deleteMany({}).then(() => {
     Dealerships.insertMany(dealerships_data["dealerships"]);
+  });
+  Cars.deleteMany({}).then(() => {
+    Cars.insertMany(cars_data["cars"]);
   });
 } catch (error) {
   res.status(500).json({ error: "Error fetching documents" });
@@ -84,6 +94,39 @@ app.get("/fetchDealer/:id", async (req, res) => {
     res.json(documents);
   } catch (error) {
     res.status(500).json({ error: "Error fetching dealer by id" });
+  }
+});
+
+// Express route to fetch cars
+app.get("/fetchCars", async (req, res) => {
+  try {
+    let query = {};
+
+    if (req.query.dealer) {
+      query.dealer_id = Number(req.query.dealer);
+    }
+
+    if (req.query.make) {
+      query.make = req.query.make;
+    }
+
+    if (req.query.model) {
+      query.model = req.query.model;
+    }
+
+    if (req.query.year) {
+      query.year = { $gte: Number(req.query.year) };
+    }
+
+    if (req.query.mileage) {
+      query.mileage = { $lte: Number(req.query.mileage) };
+    }
+
+    const documents = await Cars.find(query);
+    res.json(documents);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error fetching cars" });
   }
 });
 

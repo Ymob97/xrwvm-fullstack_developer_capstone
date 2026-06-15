@@ -1,3 +1,6 @@
+
+
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
@@ -173,10 +176,10 @@ def add_review(request):
         "status": 403,
         "message": "Unauthorized"
     })
+
 def get_inventory(request, id):
     if id:
-        endpoint = "cars/{}".format(id)
-        cars = searchcars_request(endpoint)
+        cars = get_request("/fetchCars", dealer=str(id))
         return JsonResponse({"cars": cars}, safe=False, status=200)
     else:
-        return JsonResponse({"message": "Bad Request"}, status=400)
+        return JsonResponse({"cars": []}, safe=False, status=200)
